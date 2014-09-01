@@ -68,3 +68,8 @@ var StationTo = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	}
 });
+
+var Arrives = Backbone.View.extend({
+	tagName: 'div',
+	id: 'arrives'
+});
