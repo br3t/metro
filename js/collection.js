@@ -89,6 +89,7 @@ stations.add({
 	}
 });
 
+//* Days
 var Days = Backbone.Model.extend({
 	defaults: {
 		types: [
@@ -104,3 +105,11 @@ var Days = Backbone.Model.extend({
 	}
 });
 var days = new Days();
+
+//* result
+var Arrives = Backbone.Model.extend({
+	defaults: {
+		cells: [1,2,3]
+	}
+});
+var arrives = new Arrives();
