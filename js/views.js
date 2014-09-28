@@ -32,9 +32,9 @@ var StationFrom = Backbone.View.extend({
 		alert(this.$el[0].value);
 	},
 	addOne: function(stat){
-		var opt = new StationView({model: stat});
-		opt.render();
-		this.$el.append(opt.el);
+		var option = new StationView({model: stat});
+		option.render();
+		this.$el.append(option.el);
 	},
 	render: function(){
 		this.collection.forEach(this.addOne, this);
@@ -58,13 +58,55 @@ var StationTo = Backbone.View.extend({
 		alert('Check station: ' + id);
 	},
 	addOne: function(stat){
-		var opt = new StationView({model: stat});
+		var option = new StationView({model: stat});
 		if(stat.get('isFinal')) {
-			opt.render();
-			this.$el.append(opt.el);
+			option.render();
+			this.$el.append(option.el);
 		}
 	},
 	render: function(){
 		this.collection.forEach(this.addOne, this);
+	}
+});
+
+var DaysView = Backbone.View.extend({
+	tagName: 'select',
+	id: 'days',
+	optionTemplate: '<option value="<%= slug %>"><%= title %></option>',
+	initialize: function() {
+		this.render();
+	},
+	addOption: function(option) {
+		console.log('addOption: ', option);
+		this.$el.append(this.optionTemplate(option));
+	},
+	render: function() {
+		this.$el.html('');
+		var attributes = this.model.toJSON();
+		console.log(attributes);
+		for(var i = 0; i < attributes.types.length; i++) {
+			this.addOption(attributes.types[i]);
+		}
+	}
+})
+
+var ArrivesView = Backbone.View.extend({
+	tagName: 'table',
+	id: 'arrives',
+	cellTemplate: _.template('<tr><td><%= time %></td></tr>'),
+	initialize: function() {
+		this.render();
+	},
+	addCell: function(cell) {
+		console.log(cell);
+		this.$el.append(this.cellTemplate({time: cell}));
+	},
+	render: function() {
+		this.$el.html('');
+		var attributes = this.model.toJSON();
+		console.log(attributes.cells);
+		for(var i =0; i < attributes.cells.length; i++) {
+			this.addCell(attributes.cells[i]);
+		}
 	}
 });
